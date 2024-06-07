@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <nav className="bg-gray-200 flex justify-between py-3 shadow-lg">
       <h1 className="text-2xl font-bold uppercase mx-auto">
-        <Link to="/">Books directory</Link>
+        <Link to="/">Books</Link>
       </h1>
 
       <ul className="flex gap-5 text-xl mx-auto">
