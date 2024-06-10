@@ -31,7 +31,7 @@ export default function Home() {
           </select>
         )} */}
 
-        {books ? (
+        {books && books.length ? (
           books.map((item, index) => {
             const imgUrl = `http://localhost:8000/public/uploads/${item.book_cover}`;
             return (

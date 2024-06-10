@@ -7,6 +7,7 @@ import AddBooks from "./pages/book/AddBooks";
 import { useSelector } from "react-redux";
 import Header from "./include/Header";
 import Detail from "./pages/book/Detail";
+import Footer from "./include/Footer";
 
 export default function App() {
   const { user } = useSelector((state) => state.auth);
@@ -16,12 +17,14 @@ export default function App() {
       <Routes>
         <Route element={<PrivateRoute />}>
           <Route path="/create" element={<AddBooks />} />
-          <Route path="/detail/:id" element={<Detail />} />
         </Route>
         <Route path="/" element={<Home />} />
+        <Route path="/detail/:id" element={<Detail />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
       </Routes>
+
+      {user && <Footer />}
     </div>
   );
 }
