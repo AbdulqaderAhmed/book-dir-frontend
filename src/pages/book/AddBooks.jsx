@@ -27,6 +27,8 @@ export default function AddBooks() {
 
     dispatch(addBooks(bookData));
   };
+
+  document.title = "Book | Add";
   return (
     <div className="bg-gray-300 p-5 max-w-2xl mx-auto my-10 rounded-lg shadow-lg">
       <h1 className="text-3xl font-bold text-center uppercase my-7 ">

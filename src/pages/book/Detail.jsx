@@ -14,7 +14,7 @@ export default function Detail() {
     dispatch(viewBook(id));
   }, [id, dispatch]);
 
-  console.log(books);
+  document.title = "Book | Info";
 
   return (
     <div className="flex justify-center items-center my-10 ">

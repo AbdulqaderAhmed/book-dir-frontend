@@ -29,6 +29,8 @@ export default function EditBook() {
     dispatch(editBook({ id, bookData }));
   };
 
+  document.title = "Book | Update Info";
+
   useEffect(() => {
     dispatch(viewBook(id));
   }, [id, dispatch, message]);
