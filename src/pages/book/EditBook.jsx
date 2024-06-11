@@ -8,17 +8,17 @@ export default function EditBook() {
     (state) => state.book
   );
   const [bookData, setBookData] = useState({
-    book_name: "",
-    author_one: "",
-    author_two: "",
-    publisher: "",
-    language: "",
-    paperback: "",
-    isbn_10: "",
-    about_book: "",
-    about_author: "",
-    price: "",
-    book_cover: "",
+    book_name: books?.book_name,
+    author_one: books?.author_one,
+    author_two: books?.author_two,
+    publisher: books?.publisher,
+    language: books?.language,
+    paperback: books?.paperback,
+    isbn_10: books?.isbn_10,
+    about_book: books?.about_book,
+    about_author: books?.about_author,
+    price: books?.price,
+    book_cover: null,
   });
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -29,11 +29,8 @@ export default function EditBook() {
     dispatch(editBook({ id, bookData }));
   };
 
-  // console.log(bookData);
-
   useEffect(() => {
     dispatch(viewBook(id));
-    console.log(message || "");
   }, [id, dispatch, message]);
   return (
     <div className="bg-gray-300 p-5 max-w-2xl mx-auto my-10 rounded-lg shadow-lg">

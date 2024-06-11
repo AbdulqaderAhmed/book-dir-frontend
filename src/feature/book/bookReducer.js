@@ -69,7 +69,6 @@ export const editBook = createAsyncThunk(
   "book/editBook",
   async ({ id, bookData }, thunkApi) => {
     const token = thunkApi.getState().auth.user.token;
-    console.log(bookData);
     try {
       const res = await http.put(`/book/id/${id}`, bookData, {
         headers: {
@@ -78,9 +77,8 @@ export const editBook = createAsyncThunk(
         },
       });
 
-      console.log(res.data);
+      console.log(res.data.blog);
     } catch (error) {
-      console.log(error.response.data.stack);
       const message = error.response.data.error;
       return thunkApi.rejectWithValue(message);
     }
