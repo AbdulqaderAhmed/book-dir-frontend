@@ -19,7 +19,7 @@ export default function Header() {
         <Link to="/about">
           <li>About</li>
         </Link>
-        <Link to="/profile">{user && user.username}</Link>
+        <Link to="/profile">{user?.username}</Link>
       </ul>
     </nav>
   );

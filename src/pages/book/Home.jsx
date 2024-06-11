@@ -47,7 +47,21 @@ export default function Home() {
                 />
                 <h2 className="font-bold">{item.book_name.slice(0, 30)}</h2>
                 <h3 className="text-yellow-700">${item.price}</h3>
-                <Link to={`/detail/${item._id}`}>View</Link>
+                <div className="flex justify-between">
+                  <Link
+                    to={`/detail/${item._id}`}
+                    className="text-blue-700 italic"
+                  >
+                    Read more...
+                  </Link>
+
+                  <Link
+                    to={`/edit/${item._id}`}
+                    className="text-blue-700 italic"
+                  >
+                    Edit
+                  </Link>
+                </div>
               </div>
             );
           })

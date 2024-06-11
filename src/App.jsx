@@ -8,15 +8,17 @@ import { useSelector } from "react-redux";
 import Header from "./include/Header";
 import Detail from "./pages/book/Detail";
 import Footer from "./include/Footer";
+import EditBook from "./pages/book/EditBook";
 
 export default function App() {
   const { user } = useSelector((state) => state.auth);
   return (
     <div>
-      {user && <Header />}
+      <Header />
       <Routes>
         <Route element={<PrivateRoute />}>
           <Route path="/create" element={<AddBooks />} />
+          <Route path="/edit/:id" element={<EditBook />} />
         </Route>
         <Route path="/" element={<Home />} />
         <Route path="/detail/:id" element={<Detail />} />
@@ -24,7 +26,7 @@ export default function App() {
         <Route path="/sign-up" element={<SignUp />} />
       </Routes>
 
-      {user && <Footer />}
+      <Footer />
     </div>
   );
 }

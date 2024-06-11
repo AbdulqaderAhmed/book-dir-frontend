@@ -65,6 +65,27 @@ export const viewBook = createAsyncThunk(
   }
 );
 
+export const editBook = createAsyncThunk(
+  "book/editBook",
+  async ({ id, bookData }, thunkApi) => {
+    const token = thunkApi.getState().auth.user.token;
+    console.log(bookData);
+    try {
+      const res = await http.put(`/book/id/${id}`, bookData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-type": "multipart/form-data",
+        },
+      });
+
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.response.data.stack);
+      const message = error.response.data.error;
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
 const initialState = {
   books: null,
   isLoading: false,
@@ -115,6 +136,20 @@ const bookSlice = createSlice({
         state.message = null;
       })
       .addCase(viewBook.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(editBook.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editBook.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.books = action.payload;
+        state.isError = false;
+        state.message = null;
+      })
+      .addCase(editBook.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
