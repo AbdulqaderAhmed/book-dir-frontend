@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBooks } from "../../feature/book/bookReducer.js";
 import { Link } from "react-router-dom";
+import SearchBook from "../../components/SearchBook.jsx";
 
 export default function Home() {
   // const { user } = useSelector((state) => state.auth);
   const { books, isError, message } = useSelector((state) => state.book);
   // const [page, setPage] = useState(0);
   const dispatch = useDispatch();
+
+  document.title = "Book";
 
   useEffect(() => {
     if (!isError && !message) {
@@ -16,7 +19,8 @@ export default function Home() {
   }, [isError, message, dispatch]);
 
   return (
-    <div className="flex min-h-full">
+    <div className="flex flex-col min-h-full">
+      <SearchBook dispatch={dispatch} />
       <div className="grid grid-flow-row md:grid-cols-4 lg:grid-cols-5 m-10 gap-1 md:mx-5 lg:mx-auto mx-auto">
         {/* {books && (
           <select

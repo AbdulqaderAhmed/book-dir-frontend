@@ -84,6 +84,44 @@ export const editBook = createAsyncThunk(
     }
   }
 );
+
+export const deleteBook = createAsyncThunk(
+  "book/deleteBook",
+  async (id, thunkApi) => {
+    const token = thunkApi.getState().auth.user.token;
+    try {
+      const res = await http.delete(`/book/id/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.data) {
+        return res.data.books;
+      }
+    } catch (error) {
+      const message = error.response.data.error;
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
+export const searchBook = createAsyncThunk(
+  "book/searchBook",
+  async (search, thunkApi) => {
+    try {
+      const res = await http.get(`/book/search?q=${search}`);
+
+      if (res.data) {
+        return res.data.books;
+      }
+    } catch (error) {
+      const message = error.response.data.error;
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
 const initialState = {
   books: null,
   isLoading: false,
@@ -148,6 +186,34 @@ const bookSlice = createSlice({
         state.message = null;
       })
       .addCase(editBook.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteBook.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteBook.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.books = action.payload;
+        state.isError = false;
+        state.message = null;
+      })
+      .addCase(deleteBook.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(searchBook.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(searchBook.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.books = action.payload;
+        state.isError = false;
+        state.message = null;
+      })
+      .addCase(searchBook.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

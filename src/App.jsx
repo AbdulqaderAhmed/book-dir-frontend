@@ -4,14 +4,12 @@ import SignUp from "./pages/auth/SignUp";
 import Home from "./pages/book/Home";
 import PrivateRoute from "./utils/PrivateRoutes";
 import AddBooks from "./pages/book/AddBooks";
-import { useSelector } from "react-redux";
 import Header from "./include/Header";
 import Detail from "./pages/book/Detail";
 import Footer from "./include/Footer";
 import EditBook from "./pages/book/EditBook";
 
 export default function App() {
-  const { user } = useSelector((state) => state.auth);
   return (
     <div>
       <Header />

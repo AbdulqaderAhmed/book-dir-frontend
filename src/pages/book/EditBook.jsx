@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editBook, viewBook } from "../../feature/book/bookReducer";
-import { useParams } from "react-router-dom";
+import { deleteBook, editBook, viewBook } from "../../feature/book/bookReducer";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditBook() {
   const { books, isError, message, isLoading } = useSelector(
@@ -22,6 +22,7 @@ export default function EditBook() {
   });
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,11 +30,25 @@ export default function EditBook() {
     dispatch(editBook({ id, bookData }));
   };
 
+  const handelDelete = (e) => {
+    e.preventDefault();
+    dispatch(deleteBook(id));
+
+    setTimeout(() => {
+      if (!isError || !message) {
+        navigate("/");
+      }
+    }, 100);
+  };
+
   document.title = "Book | Update Info";
 
   useEffect(() => {
+    if (isError && message) {
+      console.log(message);
+    }
     dispatch(viewBook(id));
-  }, [id, dispatch, message]);
+  }, [id, dispatch, message, isError]);
   return (
     <div className="bg-gray-300 p-5 max-w-2xl mx-auto my-10 rounded-lg shadow-lg">
       <h1 className="text-3xl font-bold text-center uppercase my-7 ">
@@ -196,13 +211,24 @@ export default function EditBook() {
           </div>
         </div>
 
-        <button
-          disabled={isLoading}
-          type="submit"
-          className="bg-black text-white text-xl mb-5 p-3 font-medium rounded-lg uppercase hover:opacity-50 disabled:opacity-50 duration-500"
-        >
-          {isLoading ? "Loading" : "Edit Book"}
-        </button>
+        <div className="flex justify-around">
+          <button
+            disabled={isLoading}
+            type="submit"
+            className="bg-black text-white text-xl mb-5 p-3 font-medium rounded-lg uppercase hover:opacity-50 disabled:opacity-50 duration-500"
+          >
+            {isLoading ? "Loading" : "Edit Book"}
+          </button>
+
+          <button
+            onClick={handelDelete}
+            disabled={isLoading}
+            type="button"
+            className="bg-red-400 text-white text-xl mb-5 p-3 font-medium rounded-lg uppercase hover:opacity-50 disabled:opacity-50 duration-500"
+          >
+            {isLoading ? "Loading" : "Delete Book"}
+          </button>
+        </div>
       </form>
     </div>
   );
