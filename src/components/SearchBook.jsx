@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { searchBook } from "../feature/book/bookReducer";
 
-export default function SearchBook({ dispatch }) {
+export default function SearchBook({ dispatch, page }) {
   const [search, setSearch] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(searchBook(search));
+    dispatch(searchBook({ search, page }));
   };
 
   return (

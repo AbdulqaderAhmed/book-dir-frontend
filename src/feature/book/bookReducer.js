@@ -3,11 +3,11 @@ import { http } from "../../api/backHttp.js";
 
 export const getAllBooks = createAsyncThunk(
   "book/getAllBooks",
-  async (thunkApi) => {
+  async (page, thunkApi) => {
     try {
-      const res = await http.get(`/book/`);
+      const res = await http.get(`/book/?p=${page}`);
       if (res.data) {
-        return res.data.books;
+        return res.data;
       }
     } catch (error) {
       const message =
@@ -108,12 +108,12 @@ export const deleteBook = createAsyncThunk(
 
 export const searchBook = createAsyncThunk(
   "book/searchBook",
-  async (search, thunkApi) => {
+  async ({ search, page }, thunkApi) => {
     try {
-      const res = await http.get(`/book/search?q=${search}`);
+      const res = await http.get(`/book/search?q=${search}&p=${page}`);
 
       if (res.data) {
-        return res.data.books;
+        return res.data;
       }
     } catch (error) {
       const message = error.response.data.error;
