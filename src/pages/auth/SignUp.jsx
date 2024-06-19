@@ -2,9 +2,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../../feature/auth/authReducer";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
-  const { user, isLoading, isError } = useSelector((state) => state.auth);
+  const { user, isLoading, isError, message } = useSelector(
+    (state) => state.auth
+  );
   const [userData, setUserData] = useState({
     username: "",
     email: "",
@@ -18,7 +21,28 @@ export default function SignUp() {
     dispatch(registerUser(userData));
 
     if (user && !isError) {
-      navigate("/sign-in");
+      toast.success("You are logged in!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      navigate("/sign-up");
+    } else {
+      toast.error(message, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 

@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addBooks } from "../../feature/book/bookReducer";
+import { toast } from "react-toastify";
 
 export default function AddBooks() {
-  const { books, isError, message, isLoading } = useSelector(
-    (state) => state.book
-  );
+  const { isError, message, isLoading } = useSelector((state) => state.book);
   const [bookData, setBookData] = useState({
     book_name: "",
     author_one: "",
@@ -22,10 +21,47 @@ export default function AddBooks() {
 
   const dispatch = useDispatch();
 
+  const handlePending = () => {
+    toast.promise("Your Book Added!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     dispatch(addBooks(bookData));
+
+    if (!message && !isError) {
+      toast.success("Your Book Added!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      toast.error(message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
   };
 
   document.title = "Book | Add";
@@ -181,6 +217,7 @@ export default function AddBooks() {
           disabled={isLoading}
           type="submit"
           className="bg-black text-white text-xl mb-5 p-3 font-medium rounded-lg uppercase hover:opacity-50 disabled:opacity-50 duration-500"
+          onClick={handlePending}
         >
           {isLoading ? "Loading" : "Add Book"}
         </button>

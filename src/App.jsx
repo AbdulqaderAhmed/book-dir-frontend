@@ -8,6 +8,7 @@ import Header from "./include/Header";
 import Detail from "./pages/book/Detail";
 import Footer from "./include/Footer";
 import EditBook from "./pages/book/EditBook";
+import { ToastContainer } from "react-toastify";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
       </Routes>
 
       <Footer />
+      <ToastContainer />
     </div>
   );
 }
